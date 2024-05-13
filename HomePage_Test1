@@ -1,0 +1,127 @@
+using NUnit.Framework.Legacy;
+using NUnit.Framework;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using selenium_practice1.Pages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+//using WebDriverManager;
+//using WebDriverManager.DriverConfigs.Impl;
+using NUnit.Framework;
+using NUnit.Framework.Legacy;
+using OpenQA.Selenium.Support.UI;
+ 
+using selenium_practice1.Test_util;
+ 
+ 
+namespace selenium_practice1.Tests
+{
+    [TestFixture]
+    public class Home_page_tests
+    {
+        private IWebDriver driver;
+        private Home_Page homePage;
+ 
+        public WebDriverUtility wdu;
+ 
+        [SetUp]
+        public void TestSetup()
+        {
+            driver = new ChromeDriver();
+            homePage = new Home_Page(driver);
+            //homePage.NavigateToPage("https://www.Modere.com/");
+            wdu = new WebDriverUtility(driver);
+            wdu.NavigateToPage("https://www.Modere.com/");
+        }
+ 
+        [Test]
+        public void verifyWelcomeTextOnHomePage()
+        {
+            //homePage.NavigateToPage("https://www.Modere.com");
+            ClassicAssert.IsTrue(homePage.webElement.Displayed,
+                "Element is not Displayed");
+        }
+ 
+        [Test]
+        public void verifyModereLogoimg()
+        {
+            ClassicAssert.IsTrue(homePage.webElement1.Displayed,
+                   "Element is not Displayed");
+        }
+ 
+        [Test]
+        public void verifyModereReward()
+        {
+            ClassicAssert.IsNotNull(homePage.webElement2,
+                   "Element is not Displayed");
+        }
+        [Test]
+        public void verifyModereReward2()
+        {
+            //ClassicAssert.IsTrue(homePage.webElement2.Enabled,
+                //   "Element is not Displayed");
+                bool isClickable= homePage.webElement2.Displayed;
+            ClassicAssert.IsFalse(isClickable,
+                   "Element is not Displayed");
+        }
+ 
+        [Test]
+        public void verifyModereShop2()
+        {
+            //ClassicAssert.IsTrue(homePage.webElement2.Enabled,
+            //   "Element is not Displayed");
+            bool isClickable = homePage.webElement3.Displayed;
+            ClassicAssert.IsFalse(isClickable, "element is not  clickable");
+}
+ 
+        [Test]
+        public void verifyModereshop()
+        {
+            ClassicAssert.IsTrue(homePage.webElement3.Displayed,
+                   "Element is not Displayed");
+        }
+ 
+        [Test]
+        public void verifyModerevideo()
+        {
+            ClassicAssert.IsTrue(homePage.webElement4.Displayed,
+                   "Element is not Displayed");
+        }
+        [Test]
+        public void verifyModereBlog()
+        {
+            ClassicAssert.IsNotNull(homePage.webElement5,
+                   "Element is not Displayed");
+        }
+ 
+        [Test]
+        public void verifyModereProfile()
+        {
+            //ClassicAssert.IsFalse(homePage.webElement6.Displayed,
+            //      "Element is not Displayed");
+ 
+            ClassicAssert.IsTrue(homePage.webElement6.Enabled,
+                   "Element is not Enabled");
+ 
+        }
+ 
+        [Test]
+        public void verifyModereshop2()
+        {
+            homePage.clickOnShop(driver);
+            ClassicAssert.IsTrue(homePage.webElement3.Displayed,
+                   "Element is not Displayed");
+        }
+ 
+ 
+ 
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
+        }
+    }
+}
