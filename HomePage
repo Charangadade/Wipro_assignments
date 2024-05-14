@@ -9,50 +9,60 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using selenium_practice1.Test_util;
- 
- 
+using System.Xml.Linq;
+
+
+
 namespace selenium_practice1.Pages
 {
- 
-     public class Home_Page
+
+     public  class HomePage
     {
-        public string  ListOfMainMenuItems = "//div[contains(@style,'position:relative')]/ul/li";
- 
+        public string  ListOfMainMenuItems1 = "//div[contains(@style," +
+            "'position:relative')]/ul//*";
+
+        public string ListOfMainMenuItems = 
+            "//div[contains(@style,'position:relative')][1]/ul//*";
         public string MainMenuButton = "//div[contains(@style,'position:relative')]" +
             "/ul/li/button[contains(text(),'Replace')]";
- 
+
         public WebDriverWait wait;
         public string welcomeTextXPath =
             "//p[contains(text(),'Welcome to the NEW Modere" +
             " website. Let us know what you think! ')]";
- 
+
         public string img_path = "/ html / body / header /" +
             " div[2] / div[2] / div / a[1] / img";
- 
+
+        public string shop =
+            "//*[@id=\'radix-:Rurldda:-trigger-cs60a00692c6726ce9\']";
+
         public string reward = "//a[contains(text(),'Rewards')]";
-        public string shop = "//a[contains(text(),'Shop')]";
+        public string shopNow = "//a[contains(text(),'Shop')]";
         public string video = "/html/body/main/div[1]/section/div[1]/div/video";
         public string blog = "//a[contains(text(),'Blog')]";
        public string profile= "/html/body/header/div[2]/div[3]/div/a//*[1]";
- 
- 
+
+
+
         public IWebDriver driver;
- 
+
         public WebDriverUtility wdu;
- 
-        public Home_Page(IWebDriver driver)
+
+        public HomePage(IWebDriver driver)
         {
             this.driver = driver;
             wait=new WebDriverWait(driver,TimeSpan.FromSeconds(100));
             wdu=new WebDriverUtility(driver);
         }
- 
+
        // WebDriverUtility w =new WebDriverUtility(driver);
+      
         public void NavigateToPage(string url)
         {
             driver.Navigate().GoToUrl(url);
         }
- 
+
        /* public IWebElement webElement => driver.FindElement
             (By.XPath(welcomeTextXPath));
         public IWebElement webElement1 => driver.FindElement(By.XPath(img_path));
@@ -61,25 +71,83 @@ namespace selenium_practice1.Pages
         public IWebElement webElement4 => driver.FindElement(By.XPath(video));
         public IWebElement webElement5 => driver.FindElement(By.XPath(blog));
         public IWebElement webElement6 => driver.FindElement(By.XPath(profile));
- 
+
         */
- 
- 
+
         public IWebElement webElement => wdu.FindElement
             (By.XPath(welcomeTextXPath));
         public IWebElement webElement1 => wdu.FindElement(By.XPath(img_path));
         public IWebElement webElement2 => wdu.FindElement(By.XPath(reward));
-        public IWebElement webElement3 => wdu.FindElement(By.XPath(shop));
+        public IWebElement webElement3 => wdu.FindElement(By.XPath(shopNow));
+        public IWebElement webElement7 => wdu.FindElement(By.XPath(shop));
         public IWebElement webElement4 => wdu.FindElement(By.XPath(video));
         public IWebElement webElement5 => wdu.FindElement(By.XPath(blog));
         public IWebElement webElement6 => wdu.FindElement(By.XPath(profile));
+        
         public ReadOnlyCollection<IWebElement> listOfMainMenuItems => 
             wdu.FindElements(By.XPath(ListOfMainMenuItems));
- 
+
     
-        public void clickOnShop(IWebDriver driver)
+      /*  public void clickOnShop(IWebDriver driver)
         {
-            wdu.clickElement(By.XPath(shop));
+            wdu.ClickElement(By.XPath(shop));
+            
+        }*/
+
+        public bool AreAllListElementsDisplayed()
+        {
+            IReadOnlyCollection<IWebElement> listElements
+                = driver.FindElements(By.XPath(ListOfMainMenuItems));
+
+            foreach (IWebElement element in listElements)
+            {
+                if (!element.Enabled)
+                {
+                    return false; 
+                }
+            }
+
+            return true; 
+        }
+
+        public  bool clickOnShop
+            ( bool value)
+        {
+            
+            var element = driver.FindElement
+                (By.XPath(shop));
+            if (value != element.Selected)
+            {
+                wdu.ClickElement(By.XPath(shop));
+                return true;
+            }
+            return false;
+        }
+       public void setWait(TimeSpan time)
+        {
+
+                wdu.setImplicitWait(time);
+          
+        }
+        public void waitForAnElementHomePage( TimeSpan timeout)
+        {
+            wdu.WaitForElement(By.XPath(reward),timeout);
+        }
+
+        public void FluentWaitForElementHomePage(TimeSpan timeout,
+            TimeSpan poll)
+        {
+            wdu.FluentWaitForElement(By.XPath(shop),timeout,poll);
+        }
+
+        public void DoubleClickElementHomePage()
+        {
+            wdu.DoubleClickElement(By.XPath(shopNow));
+        }
+        public void ScrollToElementHomePage()
+        {
+            wdu.ScrollToElement(By.XPath(blog));
         }
     }
 }
+
