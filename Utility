@@ -1,0 +1,23 @@
+ public static IWebDriver InitializeDriver(WebDriverOptions options)
+    {
+        try
+        {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--disable-extensions");
+            chromeOptions.AddArgument("--start-maximized");
+
+
+           if (options.Headless)
+            {
+                chromeOptions.AddArgument("--headless");
+            }
+
+
+           return new ChromeDriver(chromeOptions);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error initializing WebDriver: {ex.Message}");
+            return null;
+        }
+    }
