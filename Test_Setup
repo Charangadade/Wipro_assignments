@@ -1,0 +1,9 @@
+// Read WebDriver options from configuration
+
+        var configReader = new ConfigurationReader();         
+
+webDriverOptions = configReader.GetWebDriverOptions();   
+
+     // Initialize WebDriver based on configuration   
+
+     driver = WebDriverUtilities.InitializeDriver(webDriverOptions);
