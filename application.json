@@ -1,0 +1,6 @@
+{
+  "WebDriverOptions": {
+    "Headless": true,
+    "Browser": "Chrome"
+  }
+}
